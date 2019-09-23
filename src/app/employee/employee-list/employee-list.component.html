@@ -1,0 +1,6 @@
+<mat-nav-list>
+  <mat-list-item *ngFor="let employee of lstEmployee" (click)="viewDetail(employee)">
+    <app-employee-list-item [employee]="employee"></app-employee-list-item>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-nav-list>

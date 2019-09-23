@@ -1,0 +1,8 @@
+<div class="container">
+    <app-employee-header [title]="selectedItem ? 'Empleado' : 'Directorio de Empleados'" ></app-employee-header>
+    <app-employee-search  *ngIf="!selectedItem" (onSearch)="searchEmployee($event)" ></app-employee-search>
+    <app-employee-list *ngIf="!selectedItem" [lstEmployee]="lstEmployeeSearch" (onSelected)="selectedEmployee($event)" ></app-employee-list>
+
+    <app-employee-detail *ngIf="selectedItem" [employee]="employeeSelected" ></app-employee-detail>
+</div>
+        

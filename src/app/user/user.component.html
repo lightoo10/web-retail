@@ -1,0 +1,101 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Registro de Usuario</h2>
+            <form [formGroup]="userRegisterForm">
+                <mat-form-field class="form-width">
+                    <input matInput placeholder="Nombre Completo" formControlName="fullName" required>
+                    <mat-error *ngIf="userRegisterForm.get('fullName').hasError('required') && validateGenericControl(userRegisterForm.get('birthday'))">
+                        Ingrese el nombre completo
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-width">
+                    <input matInput [matDatepicker]="birthdayPicker" placeholder="Fecha de Nacimiento"
+                        formControlName="birthday" required>
+                    <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #birthdayPicker></mat-datepicker>
+                    <mat-error *ngIf="userRegisterForm.get('birthday').hasError('required') && validateGenericControl(userRegisterForm.get('birthday'))">
+                        Ingrese la fecha de nacimiento
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-width">
+                    <mat-select formControlName="gender" placeholder="Sexo">
+                        <mat-option *ngFor="let g of genders" [value]="g">
+                            {{ g }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="userRegisterForm.get('gender').hasError('required') && validateGenericControl(userRegisterForm.get('gender'))">
+                        Seleccione el sexo
+                    </mat-error>
+                </mat-form-field>
+                <div formGroupName="countryGroup" class="row">
+                    <mat-form-field class="form-width col">
+                        <mat-select formControlName="country" placeholder="Pais">
+                            <mat-option *ngFor="let c of countries" [value]="c">
+                                {{ c.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="userRegisterForm.get('countryGroup').get('country').hasError('required') && validateGenericControl(userRegisterForm.get('countryGroup'))">
+                            Seleccione el pais
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="form-width col">
+                        <input matInput placeholder="Teléfono" type="tel" formControlName="phone" required>
+                        <mat-error *ngIf="userRegisterForm.get('countryGroup').get('phone').hasError('required')">
+                            Ingrese el teléfono
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <mat-form-field class="form-width">
+                    <textarea matInput maxlength="256" placeholder="Biografia" formControlName="biografia"
+                        matTextareaAutosize></textarea>
+                    <mat-error *ngIf="userRegisterForm.get('biografia').hasError('maxlength')">
+                        Máximo se ingresa 256 caracteres
+                    </mat-error>
+                </mat-form-field>
+                <button color="primary" mat-raised-button (click)="userRegister(userRegisterForm.value)"
+                    [disabled]="!userRegisterForm.valid">
+                    Registrar
+                </button>
+            </form>
+        </div>
+        <div class="col">
+            <h2 class="section-title">Registro de Cuenta</h2>
+            <form [formGroup]="accountRegisterForm">
+                <mat-form-field class="form-width">
+                    <input matInput maxlength="25" placeholder="Usuario" formControlName="userName" required>
+                    <mat-error *ngIf="accountRegisterForm.get('userName').hasError('required')">
+                        Ingrese un usuario
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-width">
+                    <input matInput type="email" placeholder="Correo" formControlName="email" required>
+                    <mat-error *ngIf="accountRegisterForm.get('email').hasError('required')">
+                        Ingrese un correo
+                    </mat-error>
+                </mat-form-field>
+                <div formGroupName="passwordGroup">
+                    <mat-form-field class="form-width">
+                        <input matInput type="password" placeholder="Contraseña" formControlName="password" required>
+                        <mat-error *ngIf="accountRegisterForm.get('passwordGroup').get('password').hasError('required')">
+                            Ingrese una contraseña
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="form-width">
+                        <input matInput type="password" placeholder="Confirmar Contraseña" formControlName="confirmPassword" [errorStateMatcher]="validatorErrorStateMatcher" required>
+                        <mat-error *ngIf="accountRegisterForm.get('passwordGroup').get('confirmPassword').hasError('required')">
+                            Ingrese nuevamente la contraseña
+                        </mat-error>
+                        <mat-error *ngIf="accountRegisterForm.get('passwordGroup').hasError('passwordsNotEqual') && validateGenericControl(accountRegisterForm.get('passwordGroup').get('confirmPassword'))">
+                            No coinciden las contraseñas
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <button color="primary" mat-raised-button (click)="accountRegister(accountRegisterForm.value)"
+                    [disabled]="!accountRegisterForm.valid">
+                    Registrar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
